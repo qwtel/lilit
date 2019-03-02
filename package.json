@@ -1,0 +1,21 @@
+{
+  "name": "lilit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm run build",
+    "build": "./scripts/build.mjs && babel lib --out-dir cjs --plugins transform-es2015-modules-commonjs"
+  },
+  "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2"
+  }
+}
