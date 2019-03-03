@@ -1,19 +1,24 @@
 export function pipe(x, ...fs) {
     let res = x;
-    for (const f of fs) {
-        res = f(res);
-    }
+    for (const f of fs) res = f(res);
     return res;
+}
+
+export function iterator(xs) {
+    return xs[Symbol.iterator]();
+}
+
+export function asyncIterator(xs) {
+    return xs[Symbol.asyncIterator] ? xs[Symbol.asyncIterator]() : xs[Symbol.iterator]();
 }
 
 export function isIterator(xs) {
     // By convention, an iterator returns itself when calling `Symbol.iterator`.
-    return xs[Symbol.iterator]() === xs;
+    return iterator(xs) === xs;
 }
 
 export function isAsyncIterator(xs) {
-    // By convention, an iterator returns itself when calling `Symbol.iterator`.
-    return xs[Symbol.asyncIterator]() === xs;
+    return asyncIterator(xs) === xs;
 }
 
 // https://stackoverflow.com/a/46416353/870615

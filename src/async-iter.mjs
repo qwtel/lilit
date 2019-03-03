@@ -1,4 +1,4 @@
-import { pipe, asyncTee, asyncTeeN } from './common.mjs';
+import { pipe, asyncTee, asyncTeeN, asyncIterator } from './common';
 
 export { pipe };
 
@@ -234,7 +234,7 @@ export function mapValues(f) {
 
 export function pairwise() {
     return async function* (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         let prev = (await it.next()).value;
         for await (const x of it) {
             yield [prev, x];
@@ -285,7 +285,7 @@ export function minMax() {
 
 export function minBy(cf = (a, b) => a - b) {
     return async function (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         const { done, value } = await it.next();
         if (done) return Number.POSITIVE_INFINITY;
         let res = value;
@@ -296,7 +296,7 @@ export function minBy(cf = (a, b) => a - b) {
 
 export function maxBy(cf = (a, b) => a - b) {
     return async function (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         const { done, value } = await it.next();
         if (done) return Number.NEGATIVE_INFINITY;
         let res = value;
@@ -307,7 +307,7 @@ export function maxBy(cf = (a, b) => a - b) {
 
 export function minMaxBy(cf = (a, b) => a - b) {
     return async function (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         const { done, value } = await it.next();
         if (done) return [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
         let min = value;
@@ -322,7 +322,7 @@ export function minMaxBy(cf = (a, b) => a - b) {
 
 export function minByScan(cf = (a, b) => a - b) {
     return async function* (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         const { done, value } = await it.next();
         if (done) yield Number.POSITIVE_INFINITY;
         let res = value;
@@ -335,7 +335,7 @@ export function minByScan(cf = (a, b) => a - b) {
 
 export function maxByScan(cf = (a, b) => a - b) {
     return async function* (xs) {
-        const it = xs[Symbol.asyncIterator]();
+        const it = asyncIterator(xs);
         const { done, value } = await it.next();
         if (done) yield Number.NEGATIVE_INFINITY;
         let res = value;
@@ -373,7 +373,6 @@ export function grouped(n, step = n) {
                 for (let i = 0; i < step; i++) group.shift();
             }
         }
-        // yield group; // ??
     }
 }
 
@@ -435,12 +434,11 @@ export async function* enumerate(xs) {
 }
 
 export async function* concat(...xss) {
-    for (xs of xss)
-        for await (const x of xs) yield x;
+    for (const xs of xss) for await (const x of xs) yield x;
 }
 
 export async function* zip(...xss) {
-    const its = xss.map(xs => xs[Symbol.asyncIterator]());
+    const its = xss.map(asyncIterator);
     while (true) {
         const rs = await Promise.all(its.map(it => it.next()));
         if (rs.some(r => r.done)) break;
@@ -450,7 +448,7 @@ export async function* zip(...xss) {
 
 // TODO: rename? Is this how regular zip commonly works?
 export async function* zipOuter(...xss) {
-    const its = xss.map(xs => xs[Symbol.asyncIterator]());
+    const its = xss.map(asyncIterator);
     while (true) {
         const rs = await Promise.all(its.map(it => it.next()));
         if (rs.every(r => r.done)) break;
@@ -460,9 +458,11 @@ export async function* zipOuter(...xss) {
 
 // TODO: generalize to n parameters
 export async function* product(as, bs) {
-    let _bs = bs, bs2;
+    if (as === bs) [as, bs] = asyncTee(as);
+
+    let bs2;
     for await (const a of as) {
-        [_bs, bs2] = asyncTee(_bs);
+        [bs, bs2] = asyncTee(bs);
         for await (const b of bs2) {
             yield [a, b];
         }
@@ -471,11 +471,13 @@ export async function* product(as, bs) {
 
 // TODO: generalize to n parameters
 // TODO: other name (look at python itertools?)
-export async function* combinations(as, bs) {
-    let _bs = bs, bs2;
-    let i = 1;
+// TODO: fix implementation
+export async function* combinations(xs) {
+    let [as, bs] = asyncTee(xs);
+
+    let bs2, i = 1;
     for await (const a of as) {
-        [_bs, bs2] = asyncTee(_bs);
+        [bs, bs2] = asyncTee(bs);
         for await (const b of skip(i++)(bs2)) {
             yield [a, b];
         }
@@ -487,24 +489,24 @@ export async function* constantly(value) {
 }
 
 export async function* cycle(xs) {
-    let _xs = xs, xs2;
+    let xs2;
     while (true) {
-        [_xs, xs2] = asyncTee(_xs);
+        [xs, xs2] = asyncTee(xs);
         for await (const x of xs2) yield x;
     }
 }
 
 export async function* repeat(xs, n) {
-    let _xs = xs, xs2;
+    let xs2;
     for (let i = 0; i < n; i++) {
-        [_xs, xs2] = asyncTee(_xs);
+        [xs, xs2] = asyncTee(xs);
         for await (const x of xs2) yield x;
     }
 }
 
 export async function* interleave2(xs, ys) {
-    const itx = xs[Symbol.asyncIxterator]();
-    const ity = ys[Symbol.asyncIterator]();
+    const itx = asyncIterator(xs);
+    const ity = asyncIterator(ys);
     while (true) {
         const rx = await itx.next();
         if (rx.done) break;
@@ -516,7 +518,7 @@ export async function* interleave2(xs, ys) {
 }
 
 export async function* interleave(...xss) {
-    const its = xss.map(xs => xs[Symbol.asyncIterator]());
+    const its = xss.map(asyncIterator);
     outerloop: while (true) { // Throwback to the 90s
         for (const it of its) {
             const { done, value } = await it.next();
