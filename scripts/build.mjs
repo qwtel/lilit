@@ -6,6 +6,8 @@ const { readFile, writeFile } = fs.promises;
 
 (async () => {
   try {
+    if (!fs.existsSync('./mjs')) { fs.mkdirSync('./mjs'); }
+
     fs.createReadStream('./src/index.mjs').pipe(fs.createWriteStream('./mjs/index.mjs'));
     fs.createReadStream('./src/common.mjs').pipe(fs.createWriteStream('./mjs/common.mjs'));
 
