@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "description": "",
   "main": "cjs/index.js",
+  "module": "mjs/index.mjs",
+  "files": [
+    "mjs",
+    "cjs"
+  ],
   "scripts": {
     "test": "mocha",
-    "install": "npm run build",
-    "build": "npm run build:lib && npm run build:cjs",
-    "build:lib": "node --experimental-modules --no-warnings scripts/build.mjs",
-    "build:cjs": "babel lib --out-dir cjs --plugins transform-es2015-modules-commonjs",
+    "build": "npm run build:mjs && npm run build:cjs",
+    "build:mjs": "node --experimental-modules --no-warnings scripts/build.mjs",
+    "build:cjs": "babel mjs --out-dir cjs --plugins transform-es2015-modules-commonjs",
     "format": "prettier --write '{src,test}/*.{js,mjs}'",
     "version": "npm run format && npm test && git add -u"
   },
