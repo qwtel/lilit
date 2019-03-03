@@ -1,15 +1,16 @@
 {
   "name": "lilit",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "",
-  "main": "cjs/index.mjs",
+  "main": "cjs/index.js",
   "scripts": {
     "test": "mocha",
     "install": "npm run build",
-    "build": "npm run format && npm run build:lib && npm run build:cjs",
-    "build:lib": "scripts/build.mjs",
+    "build": "npm run build:lib && npm run build:cjs",
+    "build:lib": "node --experimental-modules --no-warnings scripts/build.mjs",
     "build:cjs": "babel lib --out-dir cjs --plugins transform-es2015-modules-commonjs",
-    "format": "prettier --write '{src,test}/*.{js,mjs}'"
+    "format": "prettier --write '{src,test}/*.{js,mjs}'",
+    "version": "npm run format && npm test && git add -u"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",

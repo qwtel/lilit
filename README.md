@@ -1,3 +1,1 @@
-# Little Iterator Library (lilit)
-
-Florian's little iterator library. 
+# Florian's Little Iterator Library

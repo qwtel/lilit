@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- node
+deploy:
+  provider: npm
+  email: mail@qwtel.com
+  api_key:
+    secure: hrXz76Itbvwj+Wfa35ShJESGY2Ahndb4yjrIdvgRIUISMHjeBtCyA7xa/STqTw4TN39fwhcie+eyNEpEECCmvXi4qhSJ/biEoaHjlHaEr5MOTAzAuqAh7pLsZB1ggVdHu+FsbjSWtnOH0OtdD3lPiAI8ydJ/s9ZYrGYx1rR4qco4hlx6R0BGVyDvxGGXZ7zid5oDNODyKz3YyONLZCiAAORWMySuPvOY5AraKCleKqw7rfJoNf2/v0UdFQAcnGl6BQJ+rlFBQPqESXIANAohR9qWqE8mATlhLvUI6wrARutgWOCA6HNxB1pFTYd8bBrW7PZ++wtXaKP/TaNNogxCoYZb8qvzvunk3U2HJSAT3f070RmP5DPO5nRK1xGY7yQpOCSEOdr7fEIE0eTLH0VymUPTU5cOJiEiCwK9eKVMPRqmXzTPhZNee8aP0Zo6UkjetdQJMxeEznjyzJN3tWigVNsPWj4SIQYbIW+PlrZ5zAADtimUw9OhrebB25K6pDZcdd2i5c9eJNVeSYtYOFWkSd7WFXlMnAa7/GP+4aioiMwEmVpgjCilF6UT/YrqDePH5wN3K74CNu51JOAX9wQ3pkK7iX8oGhCK/5aaOab708KbXnJ8feXKi/a6JeQyvSm1bb/jQ/xH/aCJ1Fxgpf5eUcvJMaOMebKXp2caSdik07k=
+  on:
+    tags: true
+    repo: qwtel/lilit
+  skip_cleanup: true
+notifications:
+  email:
+    on_success: never
+    on_failure: always
