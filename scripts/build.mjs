@@ -6,8 +6,8 @@ const { readFile, writeFile } = fs.promises;
 
 (async () => {
   try {
-    fs.createReadStream('./src/index.mjs').pipe(fs.createWriteStream('./lib/index.mjs'));
-    fs.createReadStream('./src/common.mjs').pipe(fs.createWriteStream('./lib/common.mjs'));
+    fs.createReadStream('./src/index.mjs').pipe(fs.createWriteStream('./mjs/index.mjs'));
+    fs.createReadStream('./src/common.mjs').pipe(fs.createWriteStream('./mjs/common.mjs'));
 
     const content = await readFile('./src/async-iter.mjs', 'utf8');
 
@@ -22,8 +22,8 @@ const { readFile, writeFile } = fs.promises;
     c = c.replace(/asyncIterator/g, 'iterator');
 
     await Promise.all([
-      writeFile('./lib/async-iter.mjs', content, 'utf8'),
-      writeFile('./lib/iter.mjs', c, 'utf8')
+      writeFile('./mjs/async-iter.mjs', content, 'utf8'),
+      writeFile('./mjs/iter.mjs', c, 'utf8')
     ]);
 
     process.exit(0);
