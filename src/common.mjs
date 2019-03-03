@@ -27,7 +27,7 @@ export function tee(it) {
   // we just return it unmodified.
   if (!isIterator(it)) return [it, it];
 
-  const source = it[Symbol.iterator]();
+  const source = iterator(it);
   const buffers = [[], []];
   const DONE = Symbol('done');
 
@@ -51,7 +51,7 @@ export function tee(it) {
 export function asyncTee(it) {
   if (!isAsyncIterator(it)) return [it, it];
 
-  const source = it[Symbol.asyncIterator]();
+  const source = asyncIterator(it);
   const buffers = [[], []];
   const DONE = Symbol('done');
 
