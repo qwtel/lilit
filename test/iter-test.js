@@ -146,11 +146,33 @@ describe('take', () => {
   });
 });
 
-describe('splitAt', () => {
+describe('partitionAt', () => {
   it('should take n and skip n', () => {
-    const [xs1, xs2] = lilit.splitAt(1)(xs);
+    const [xs1, xs2] = lilit.partitionAt(1)(xs);
     assert.deepEqual([...xs1], [1]);
     assert.deepEqual([...xs2], [2, 3]);
+  });
+
+  it('should alias to splitAt', () => assert.equal(lilit.partitionAt, lilit.splitAt));
+});
+
+describe('skipWhile', () => {
+  it('should skip while the condition is met', () => {
+    assert.deepEqual([...lilit.skipWhile(x => x < 3)([1, 2, 3, 4, 5])], [3, 4, 5]);
+  });
+});
+
+describe('takeWhile', () => {
+  it('should take while the condition is met', () => {
+    assert.deepEqual([...lilit.takeWhile(x => x < 3)([1, 2, 3, 4, 5])], [1, 2]);
+  });
+});
+
+describe('partitionWhile', () => {
+  it('should partition at the element where the condition changes', () => {
+    const [taken, skipped] = lilit.partitionWhile(x => x < 3)([1, 2, 3, 4, 5]);
+    assert.deepEqual([...taken], [1, 2]);
+    assert.deepEqual([...skipped], [3, 4, 5]);
   });
 });
 

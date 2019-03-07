@@ -105,10 +105,41 @@ export function take(n) {
 }
 
 // TODO: rename?
-export function splitAt(n) {
+export function partitionAt(n) {
   return function(xs) {
     const [xs1, xs2] = asyncTee(xs);
     return [take(n)(xs1), skip(n)(xs2)];
+  };
+}
+
+export const splitAt = partitionAt;
+
+export function skipWhile(f) {
+  return async function*(xs) {
+    const it = asyncIterator(xs);
+    let first;
+    for await (const x of it) {
+      first = x;
+      if (!f(x)) break;
+    }
+    yield first;
+    for await (const x of it) yield x;
+  };
+}
+
+export function takeWhile(f) {
+  return async function*(xs) {
+    for await (const x of xs) {
+      if (f(x)) yield x;
+      else break;
+    }
+  };
+}
+
+export function partitionWhile(f) {
+  return function(xs) {
+    const [xs1, xs2] = asyncTee(xs);
+    return [takeWhile(f)(xs1), skipWhile(f)(xs2)];
   };
 }
 
