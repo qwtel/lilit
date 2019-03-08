@@ -12,7 +12,7 @@
     "test": "npm run build && mocha",
     "build": "npm run build:mjs && npm run build:cjs",
     "build:mjs": "node --experimental-modules --no-warnings scripts/build.mjs",
-    "build:cjs": "babel mjs --out-dir cjs --plugins transform-es2015-modules-commonjs",
+    "build:cjs": "babel mjs --out-dir cjs",
     "format": "prettier --write '{src,test}/*.{js,mjs}'",
     "preversion": "npm run format && npm test && git add -u"
   },
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "assert": "^1.4.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "mocha": "^6.0.2",
     "prettier": "^1.16.4"
   }
