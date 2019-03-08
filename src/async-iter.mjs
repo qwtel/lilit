@@ -457,7 +457,6 @@ export function distinctUntilChanged(equals = (a, b) => a === b) {
   };
 }
 
-
 // CONSTRUCTORS
 
 export async function* range(start = 0, end = Number.MAX_SAFE_INTEGER, step = 1) {
