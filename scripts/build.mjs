@@ -25,7 +25,7 @@ const { readFile, writeFile } = fs.promises;
 
     await Promise.all([
       writeFile('./mjs/async-iter.mjs', content, 'utf8'),
-      writeFile('./mjs/iter.mjs', c, 'utf8')
+      writeFile('./mjs/iter.mjs', c, 'utf8'),
     ]);
 
     process.exit(0);

@@ -614,3 +614,21 @@ describe('interleave', () => {
     );
   });
 });
+
+describe('flatMap', () => {
+  it('should flat map', () => {
+    const xss = [[1, 2, 3], [4, 5, 6]];
+    const expect = [2, 3, 4, 5, 6, 7];
+    const actual = [...lilit.flatMap(x => x + 1)(xss)];
+    assert.deepEqual(expect, actual);
+  })
+})
+
+describe('distinctUntilChanged', () => {
+  it('should remove duplicate entries', () => {
+    const xs = [1, 1, 1, 2, 2, 3, 4, 4, 4, 4, 5]
+    const expect = [1, 2, 3, 4, 5];
+    const actual = [...lilit.distinctUntilChanged()(xs)];
+    assert.deepEqual(expect, actual);
+  });
+});

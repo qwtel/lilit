@@ -444,6 +444,20 @@ export function sortScan(cf) {
   };
 }
 
+export function flatMap(f) {
+  return async function*(xss) {
+    for await (const xs of xss) for await (const x of xs) yield await f(x);
+  };
+}
+
+export function distinctUntilChanged(equals = (a, b) => a === b) {
+  return async function*(xs) {
+    let initial = Symbol();
+    for await (const x of xs) if (!equals(x, initial)) yield (initial = x);
+  };
+}
+
+
 // CONSTRUCTORS
 
 export async function* range(start = 0, end = Number.MAX_SAFE_INTEGER, step = 1) {
