@@ -1,7 +1,7 @@
-const assert = require('assert');
+import { equal, deepEqual } from 'assert';
 
-const lilit = require('../cjs/async-iter');
-const { isAsyncIterator } = require('../cjs/common');
+import * as lilit from '../src/async-iter';
+import { isAsyncIterator } from '../src/common';
 
 describe('async iter', () => {
   async function* xs() {
@@ -19,8 +19,8 @@ describe('async iter', () => {
   describe('map', () => {
     it('should map values', async () => {
       const expect = [2, 3, 4];
-      const actual = lilit.map(x => x + 1)(xs());
-      assert.deepEqual(expect, await toArray(actual));
+      const actual = lilit.map((x: number) => x + 1)(xs());
+      deepEqual(expect, await toArray(actual));
     });
   });
 

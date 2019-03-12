@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "esnext",
+    "lib": [
+      "es2018",
+      "esnext.asynciterable"
+    ],
+    "outDir": "./mjs"
+  },
+  "files": [
+    "src/index.ts"
+  ]
+}
