@@ -7,17 +7,85 @@ import { tee, teeN, iterator } from './common';
 
 
 // https://github.com/Microsoft/TypeScript/issues/17718#issuecomment-402931751
-export function pipe<T1>(x: T1): T1
-export function pipe<T1, T2>(x: T1, f1: (a: T1) => T2): T2
-export function pipe<T1, T2, T3>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3): T3
-export function pipe<T1, T2, T3, T4>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4): T4
-export function pipe<T1, T2, T3, T4, T5>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5): T5
-export function pipe<T1, T2, T3, T4, T5, T6>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6): T6
-export function pipe<T1, T2, T3, T4, T5, T6, T7>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6, f6: (a: T6) => T7): T7
-export function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6, f6: (a: T6) => T7, f7: (a: T7) => T8): T8
-export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6, f6: (a: T6) => T7, f7: (a: T7) => T8, f8: (a: T8) => T9): T9
-export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6, f6: (a: T6) => T7, f7: (a: T7) => T8, f8: (a: T8) => T9, f9: (a: T9) => T10):  T10
-export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(x: () => T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4, f4: (a: T4) => T5, f5: (a: T5) => T6, f6: (a: T6) => T7, f7: (a: T7) => T8, f8: (a: T8) => T9, f9: (a: T9) => T10, f10: (a: T10) => T11):  T11
+export function pipe<T1>(x: T1): T1;
+export function pipe<T1, T2>(x: T1, f1: (a: T1) => T2): T2;
+export function pipe<T1, T2, T3>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3): T3;
+export function pipe<T1, T2, T3, T4>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+): T4;
+export function pipe<T1, T2, T3, T4, T5>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+): T5;
+export function pipe<T1, T2, T3, T4, T5, T6>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+): T6;
+export function pipe<T1, T2, T3, T4, T5, T6, T7>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+  f6: (a: T6) => T7,
+): T7;
+export function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+  f6: (a: T6) => T7,
+  f7: (a: T7) => T8,
+): T8;
+export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+  f6: (a: T6) => T7,
+  f7: (a: T7) => T8,
+  f8: (a: T8) => T9,
+): T9;
+export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+  f6: (a: T6) => T7,
+  f7: (a: T7) => T8,
+  f8: (a: T8) => T9,
+  f9: (a: T9) => T10,
+): T10;
+export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  x: () => T1,
+  f1: (a: T1) => T2,
+  f2: (a: T2) => T3,
+  f3: (a: T3) => T4,
+  f4: (a: T4) => T5,
+  f5: (a: T5) => T6,
+  f6: (a: T6) => T7,
+  f7: (a: T7) => T8,
+  f8: (a: T8) => T9,
+  f9: (a: T9) => T10,
+  f10: (a: T10) => T11,
+): T11;
 export function pipe(x: any, ...fs: Function[]): any {
   let res = x;
   for (const f of fs) res = f(res);
@@ -27,13 +95,13 @@ export function pipe(x: any, ...fs: Function[]): any {
 // OPERATORS
 
 export function map<A, B>(f: (x: A) => B) {
-  return function* (xs: Iterable<A>): IterableIterator<B> {
+  return function*(xs: Iterable<A>): IterableIterator<B> {
     for (const x of xs) yield f(x);
   };
 }
 
 export function tap<X>(f: (x: X) => any) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     for (const x of xs) {
       f(x);
       yield x;
@@ -44,7 +112,7 @@ export function tap<X>(f: (x: X) => any) {
 export const inspect = tap;
 
 export function forEach<X>(f: (x: X) => any) {
-  return function (xs: Iterable<X>): void {
+  return function(xs: Iterable<X>): void {
     for (const x of xs) f(x);
   };
 }
@@ -52,7 +120,7 @@ export function forEach<X>(f: (x: X) => any) {
 export const subscribe = forEach;
 
 export function reduce<X, R>(f: (acc: R, x: X) => R, init: R) {
-  return function (xs: Iterable<X>): R {
+  return function(xs: Iterable<X>): R {
     let res = init;
     for (const x of xs) {
       res = f(res, x);
@@ -62,7 +130,7 @@ export function reduce<X, R>(f: (acc: R, x: X) => R, init: R) {
 }
 
 export function scan<X, R>(f: (acc: R, x: X) => R, init: R) {
-  return function* (xs: Iterable<X>): IterableIterator<R> {
+  return function*(xs: Iterable<X>): IterableIterator<R> {
     let res = init;
     for (const x of xs) {
       res = f(res, x);
@@ -74,7 +142,7 @@ export function scan<X, R>(f: (acc: R, x: X) => R, init: R) {
 export const reducutions = scan;
 
 export function some<X>(p: (x: X) => boolean) {
-  return function (xs: Iterable<X>): boolean {
+  return function(xs: Iterable<X>): boolean {
     for (const x of xs) {
       if (p(x)) return true;
     }
@@ -83,7 +151,7 @@ export function some<X>(p: (x: X) => boolean) {
 }
 
 export function every<X>(p: (x: X) => boolean) {
-  return function (xs: Iterable<X>): boolean {
+  return function(xs: Iterable<X>): boolean {
     for (const x of xs) {
       if (!p(x)) return false;
     }
@@ -92,7 +160,7 @@ export function every<X>(p: (x: X) => boolean) {
 }
 
 export function filter<X>(p: (x: X) => boolean) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     for (const x of xs) {
       if (p(x)) yield x;
     }
@@ -100,14 +168,14 @@ export function filter<X>(p: (x: X) => boolean) {
 }
 
 export function partition<X>(p: (x: X) => boolean) {
-  return function (xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
+  return function(xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
     const [xs1, xs2] = tee(xs);
     return [filter(p)(xs1), filter((x: X) => !p(x))(xs2)];
   };
 }
 
 export function skip<X>(n: number) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     let i = 0;
     for (const x of xs) {
       if (++i <= n) continue;
@@ -117,7 +185,7 @@ export function skip<X>(n: number) {
 }
 
 export function take<X>(n: number) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     let i = 0;
     for (const x of xs) {
       if (++i > n) break;
@@ -128,7 +196,7 @@ export function take<X>(n: number) {
 
 // TODO: rename?
 export function partitionAt<X>(n: number) {
-  return function (xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
+  return function(xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
     const [xs1, xs2] = tee(xs);
     return [take<X>(n)(xs1), skip<X>(n)(xs2)];
   };
@@ -137,7 +205,7 @@ export function partitionAt<X>(n: number) {
 export const splitAt = partitionAt;
 
 export function skipWhile<X>(f: (x: X) => boolean) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     const it = iterator(xs);
     let first: X;
     for (const x of it) {
@@ -150,7 +218,7 @@ export function skipWhile<X>(f: (x: X) => boolean) {
 }
 
 export function takeWhile<X>(f: (x: X) => boolean) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     for (const x of xs) {
       if (f(x)) yield x;
       else break;
@@ -159,14 +227,14 @@ export function takeWhile<X>(f: (x: X) => boolean) {
 }
 
 export function partitionWhile<X>(f: (x: X) => boolean) {
-  return function (xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
+  return function(xs: Iterable<X>): [IterableIterator<X>, IterableIterator<X>] {
     const [xs1, xs2] = tee(xs);
     return [takeWhile<X>(f)(xs1), skipWhile<X>(f)(xs2)];
   };
 }
 
 export function find<X>(p: (x: X) => boolean) {
-  return function (xs: Iterable<X>): X | null {
+  return function(xs: Iterable<X>): X | null {
     for (const x of xs) {
       if (p(x)) return x;
     }
@@ -175,7 +243,7 @@ export function find<X>(p: (x: X) => boolean) {
 }
 
 export function findIndex<X>(p: (x: X) => boolean) {
-  return function (xs: Iterable<X>): number {
+  return function(xs: Iterable<X>): number {
     let i = 0;
     for (const x of xs) {
       if (p(x)) return i;
@@ -186,14 +254,14 @@ export function findIndex<X>(p: (x: X) => boolean) {
 }
 
 export function pluck<X>(key: string | number) {
-  return function* (xs: Iterable<Object>): IterableIterator<X | null> {
+  return function*(xs: Iterable<Object>): IterableIterator<X | null> {
     for (const x of xs) yield x[key];
   };
 }
 
 // like pluck, but accepts an iterable of keys
 export function select<X>(keys: Array<string | number>) {
-  return function* (xs: Iterable<Object>): IterableIterator<X | null> {
+  return function*(xs: Iterable<Object>): IterableIterator<X | null> {
     for (const x of xs) {
       let r = x;
       for (const k of keys) {
@@ -205,14 +273,14 @@ export function select<X>(keys: Array<string | number>) {
 }
 
 export function unzip2<X, Y>() {
-  return function (xs: Iterable<[X, Y]>): [IterableIterator<X>, IterableIterator<Y>] {
+  return function(xs: Iterable<[X, Y]>): [IterableIterator<X>, IterableIterator<Y>] {
     const [xs1, xs2] = tee(xs);
     return [pluck<X>(0)(xs1), pluck<Y>(1)(xs2)];
   };
 }
 
 export function unzip3<X, Y, Z>() {
-  return function (
+  return function(
     xs: Iterable<[X, Y, Z]>,
   ): [IterableIterator<X>, IterableIterator<Y>, IterableIterator<Z>] {
     const [xs1, xs2, xs3] = teeN(xs, 3);
@@ -221,14 +289,14 @@ export function unzip3<X, Y, Z>() {
 }
 
 export function unzip(n: number = 2) {
-  return function (xs: Iterable<{}[]>): IterableIterator<{}>[] {
+  return function(xs: Iterable<{}[]>): IterableIterator<{}>[] {
     const xss = teeN(xs, n);
     return xss.map((xs, i) => pluck(i)(xs));
   };
 }
 
 export function groupBy<X, K>(f: (x: X) => K) {
-  return function (xs: Iterable<X>): Map<K, X[]> {
+  return function(xs: Iterable<X>): Map<K, X[]> {
     const res = new Map<K, X[]>();
     for (const x of xs) {
       const key = f(x);
@@ -244,19 +312,19 @@ export function groupByKey<X>(key: string | number) {
 }
 
 export function mapKeys<A, B, U>(f: (k: A) => B) {
-  return function* (xs: Iterable<[A, U]>): IterableIterator<[B, U]> {
+  return function*(xs: Iterable<[A, U]>): IterableIterator<[B, U]> {
     for (const [k, v] of xs) yield [f(k), v];
   };
 }
 
 export function mapValues<A, B, U>(f: (v: A) => B) {
-  return function* (xs: Iterable<[U, A]>): IterableIterator<[U, B]> {
+  return function*(xs: Iterable<[U, A]>): IterableIterator<[U, B]> {
     for (const [k, v] of xs) yield [k, f(v)];
   };
 }
 
 export function pairwise<X>() {
-  return function* (xs: Iterable<X>): IterableIterator<[X, X]> {
+  return function*(xs: Iterable<X>): IterableIterator<[X, X]> {
     const it = iterator(xs);
     let prev = (it.next()).value;
     for (const x of it) {
@@ -267,7 +335,7 @@ export function pairwise<X>() {
 }
 
 export function length() {
-  return function (xs: Iterable<{}>): number {
+  return function(xs: Iterable<{}>): number {
     let c = 0;
     for (const _ of xs) c++;
     return c;
@@ -275,7 +343,7 @@ export function length() {
 }
 
 export function min() {
-  return function (xs: Iterable<number>): number {
+  return function(xs: Iterable<number>): number {
     let res = Number.POSITIVE_INFINITY;
     for (const x of xs) {
       if (x < res) res = x;
@@ -285,7 +353,7 @@ export function min() {
 }
 
 export function max() {
-  return function (xs: Iterable<number>): number {
+  return function(xs: Iterable<number>): number {
     let res = Number.NEGATIVE_INFINITY;
     for (const x of xs) {
       if (x > res) res = x;
@@ -295,7 +363,7 @@ export function max() {
 }
 
 export function minMax() {
-  return function (xs: Iterable<number>): [number, number] {
+  return function(xs: Iterable<number>): [number, number] {
     let min = Number.POSITIVE_INFINITY;
     let max = Number.NEGATIVE_INFINITY;
     for (const x of xs) {
@@ -307,7 +375,7 @@ export function minMax() {
 }
 
 export function minBy<X>(cf: (a: X, b: X) => number) {
-  return function (xs: Iterable<X>): X | null {
+  return function(xs: Iterable<X>): X | null {
     const it = iterator(xs);
     const { done, value } = it.next();
     if (done) return null;
@@ -318,7 +386,7 @@ export function minBy<X>(cf: (a: X, b: X) => number) {
 }
 
 export function maxBy<X>(cf: (a: X, b: X) => number) {
-  return function (xs: Iterable<X>): X | null {
+  return function(xs: Iterable<X>): X | null {
     const it = iterator(xs);
     const { done, value } = it.next();
     if (done) return null;
@@ -329,7 +397,7 @@ export function maxBy<X>(cf: (a: X, b: X) => number) {
 }
 
 export function minMaxBy<X>(cf: (a: X, b: X) => number) {
-  return function (xs: Iterable<X>): [X | null, X | null] {
+  return function(xs: Iterable<X>): [X | null, X | null] {
     const it = iterator(xs);
     const { done, value } = it.next();
     if (done) return [null, null];
@@ -344,7 +412,7 @@ export function minMaxBy<X>(cf: (a: X, b: X) => number) {
 }
 
 export function minByScan<X>(cf: (a: X, b: X) => number) {
-  return function* (xs: Iterable<X>): IterableIterator<X | null> {
+  return function*(xs: Iterable<X>): IterableIterator<X | null> {
     const it = iterator(xs);
     const { done, value } = it.next();
     if (done) yield null;
@@ -357,7 +425,7 @@ export function minByScan<X>(cf: (a: X, b: X) => number) {
 }
 
 export function maxByScan<X>(cf: (a: X, b: X) => number) {
-  return function* (xs: Iterable<X>): IterableIterator<X | null> {
+  return function*(xs: Iterable<X>): IterableIterator<X | null> {
     const it = iterator(xs);
     const { done, value } = it.next();
     if (done) yield null;
@@ -370,7 +438,7 @@ export function maxByScan<X>(cf: (a: X, b: X) => number) {
 }
 
 export function sum(zero: number = 0) {
-  return function (xs: Iterable<number>): number {
+  return function(xs: Iterable<number>): number {
     let res = zero;
     for (const x of xs) res += x;
     return res;
@@ -378,7 +446,7 @@ export function sum(zero: number = 0) {
 }
 
 export function replaceWhen<X, Y>(pf: (x: X) => boolean, ys: Iterable<Y>) {
-  return function* (xs: Iterable<X>): IterableIterator<X | Y> {
+  return function*(xs: Iterable<X>): IterableIterator<X | Y> {
     for (const [x, y] of zip2(xs, ys)) {
       if (!pf(x)) yield x;
       else yield y;
@@ -387,7 +455,7 @@ export function replaceWhen<X, Y>(pf: (x: X) => boolean, ys: Iterable<Y>) {
 }
 
 export function grouped<X>(n: number, step: number = n) {
-  return function* (xs: Iterable<X>): IterableIterator<X[]> {
+  return function*(xs: Iterable<X>): IterableIterator<X[]> {
     let group = [];
     for (const x of xs) {
       group.push(x);
@@ -400,21 +468,21 @@ export function grouped<X>(n: number, step: number = n) {
 }
 
 export function startWith<X>(...as: X[]) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     for (const a of as) yield a;
     for (const x of xs) yield x;
   };
 }
 
 export function endWith<X>(...zs: X[]) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     for (const x of xs) yield x;
     for (const z of zs) yield z;
   };
 }
 
 export function sort<X>(cf: (a: X, b: X) => number) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     let arr = [];
     for (const x of xs) arr.push(x);
     for (const x of arr.sort(cf)) yield x;
@@ -422,7 +490,7 @@ export function sort<X>(cf: (a: X, b: X) => number) {
 }
 
 export function sortScan<X>(cf: (a: X, b: X) => number) {
-  return function* (xs: Iterable<X>): IterableIterator<X[]> {
+  return function*(xs: Iterable<X>): IterableIterator<X[]> {
     let arr = [];
     for (const x of xs) {
       arr.push(x);
@@ -432,13 +500,13 @@ export function sortScan<X>(cf: (a: X, b: X) => number) {
 }
 
 export function flatMap<A, B>(f: (x: A) => B) {
-  return function* (xss: Iterable<Iterable<A>>): IterableIterator<B> {
+  return function*(xss: Iterable<Iterable<A>>): IterableIterator<B> {
     for (const xs of xss) for (const x of xs) yield f(x);
   };
 }
 
 export function distinctUntilChanged<X>(comp: (a: X, b: X) => boolean = (a, b) => a === b) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     const it = iterator(xs);
     let { done, value: initial } = it.next();
     if (done) return;
@@ -448,7 +516,7 @@ export function distinctUntilChanged<X>(comp: (a: X, b: X) => boolean = (a, b) =
 }
 
 export function unique<X>(comp: (a: X, b: X) => boolean = (a, b) => a === b) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     const arr = [];
     for (const x of xs) arr.push(x);
     const unq = arr.filter((x, i, self) => self.findIndex(y => comp(x, y)) === i);
@@ -457,7 +525,7 @@ export function unique<X>(comp: (a: X, b: X) => boolean = (a, b) => a === b) {
 }
 
 export function uniqueSorted<X>(comp: (a: X, b: X) => boolean = (a, b) => a === b) {
-  return function* (xs: Iterable<X>): IterableIterator<X> {
+  return function*(xs: Iterable<X>): IterableIterator<X> {
     const arr = [];
     for (const x of xs) arr.push(x);
     arr.sort();
