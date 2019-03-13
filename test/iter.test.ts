@@ -12,16 +12,24 @@ describe('iter', () => {
   const xs = [1, 2, 3];
 
   describe('tee', () => {
-    function* g() { yield 1; yield 2; yield 3; };
+    function* g() {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
     it('should tee an iterator', () => {
       const [a, b] = tee(g());
       deepEqual([1, 2, 3], [...a]);
       deepEqual([1, 2, 3], [...b]);
-    })
+    });
   });
 
   describe('teeN', () => {
-    function* g() { yield 1; yield 2; yield 3; };
+    function* g() {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
 
     it('should tee an iterator x3', () => {
       const [a, b, c] = teeN(g(), 3);
@@ -36,7 +44,7 @@ describe('iter', () => {
       deepEqual([1, 2, 3], [...b]);
       deepEqual([1, 2, 3], [...c]);
       deepEqual([1, 2, 3], [...d]);
-    })
+    });
   });
 
   describe('map', () => {
@@ -560,10 +568,10 @@ describe('iter', () => {
     });
 
     it('should pass the python itertools example', () => {
-      const actual = [...lilit.product2('ABCD', 'ABCD')].map(_ => _.join(''))
+      const actual = [...lilit.product2('ABCD', 'ABCD')].map(_ => _.join(''));
       const expect = ['AA', 'AB', 'AC', 'AD', 'BA', 'BB', 'BC', 'BD', 'CA', 'CB', 'CC', 'CD', 'DA', 'DB', 'DC', 'DD'];
       deepEqual(actual, expect);
-    })
+    });
 
     it.skip('should work when passing the same iterator twice', () => {
       const g = lilit.range(0, 3);
@@ -597,7 +605,7 @@ describe('iter', () => {
       const actual = [...lilit.combinations2('ABCD')].map(_ => _.join(''));
       const expect = ['AB', 'AC', 'AD', 'BC', 'BD', 'CD'];
       deepEqual(actual, expect);
-    })
+    });
   });
 
   describe.skip('combinations3', () => {
@@ -651,20 +659,20 @@ describe('iter', () => {
 
   describe.skip('permutations2', () => {
     // # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
-    it("should yield all permutations of length 2", () => {
-      const actual = [...lilit.permutations2('ABCD')].map(_ => _.join(''))
-      const expect = ['AB', 'AC', 'AD', 'BA', 'BC', 'BD', 'CA', 'CB', 'DA', 'DB', 'DC']
+    it('should yield all permutations of length 2', () => {
+      const actual = [...lilit.permutations2('ABCD')].map(_ => _.join(''));
+      const expect = ['AB', 'AC', 'AD', 'BA', 'BC', 'BD', 'CA', 'CB', 'DA', 'DB', 'DC'];
       deepEqual(actual, expect);
     });
   });
 
   describe.skip('permutations3', () => {
     // # permutations(range(3)) --> 012 021 102 120 201 210
-    it("should yield all permutations of length 3", () => {
+    it('should yield all permutations of length 3', () => {
       const actual = [...lilit.permutations3(lilit.range(0, 3))];
-      const expect = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]
+      const expect = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]];
       deepEqual(actual, expect);
-    })
+    });
   });
 
   describe('constantly', () => {
