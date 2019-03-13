@@ -18,7 +18,7 @@
     "build:mjs": "rm -rf mjs && tsc -p tsconfig.mjs.json && rename 's/\\.js$/.mjs/' mjs/*",
     "build:cjs": "tsc -p tsconfig.json",
     "build:es5": "tsc -p tsconfig.es5.json",
-    "build:deno": "./scripts/deno.mjs",
+    "build:deno": "node --experimental-modules --no-warnings scripts/deno.mjs",
     "format": "prettier --write '{src,test}/*.{js,ts}'",
     "preversion": "npm run format && npm test && git add -u",
     "prepack": "npm run clean && npm run build"
