@@ -17,7 +17,7 @@ async function* getFiles(dir) {
   }
 }
 
-const RE = /^(import|export)\s+(.*)\s+from\s+['"](.+)['"]\s*;*\s*$/gm;
+const RE = /^[ \t]*(import|export)\s+(.*)\s+from\s+['"](.+)['"][ \t;]*$/gm;
 
 (async () => {
   if (!fs.existsSync('./deno')) fs.mkdirSync('./deno');
