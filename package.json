@@ -7,14 +7,15 @@
   "files": [
     "mjs",
     "cjs",
-    "es5"
+    "es5",
+    "src"
   ],
   "scripts": {
     "clean": "rm -rf cjs es5 mjs",
     "test": "npm run build:pre && mocha --require ts-node/register test/*.test.ts",
     "build": "npm run build:pre && (npm run build:mjs & npm run build:cjs & npm run build:es5 & wait)",
     "build:pre": "node --experimental-modules --no-warnings scripts/build.mjs",
-    "build:mjs": "rm -rf mjs/* && tsc -p tsconfig.mjs.json && rename 's/\\.js$/.mjs/' mjs/*",
+    "build:mjs": "tsc -p tsconfig.mjs.json && rm mjs/*.mjs && rename 's/\\.js$/.mjs/' mjs/*",
     "build:cjs": "tsc -p tsconfig.json",
     "build:es5": "tsc -p tsconfig.es5.json",
     "format": "prettier --write '{src,test}/*.{js,ts}'",

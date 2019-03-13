@@ -1,7 +1,7 @@
 import { deepEqual, equal } from 'assert';
 
 import * as lilit from '../src/iter';
-import { isIterator } from '../src/common';
+import { isIterator, tee, teeN } from '../src/common';
 
 describe('iter', () => {
   function* count() {
@@ -10,6 +10,34 @@ describe('iter', () => {
   }
 
   const xs = [1, 2, 3];
+
+  describe('tee', () => {
+    function* g() { yield 1; yield 2; yield 3; };
+    it('should tee an iterator', () => {
+      const [a, b] = tee(g());
+      deepEqual([1, 2, 3], [...a]);
+      deepEqual([1, 2, 3], [...b]);
+    })
+  });
+
+  describe('teeN', () => {
+    function* g() { yield 1; yield 2; yield 3; };
+
+    it('should tee an iterator x3', () => {
+      const [a, b, c] = teeN(g(), 3);
+      deepEqual([1, 2, 3], [...a]);
+      deepEqual([1, 2, 3], [...b]);
+      deepEqual([1, 2, 3], [...c]);
+    });
+
+    it('should tee an iterator x4', () => {
+      const [a, b, c, d] = teeN(g(), 4);
+      deepEqual([1, 2, 3], [...a]);
+      deepEqual([1, 2, 3], [...b]);
+      deepEqual([1, 2, 3], [...c]);
+      deepEqual([1, 2, 3], [...d]);
+    })
+  });
 
   describe('map', () => {
     it('should map values', () => {
@@ -471,6 +499,8 @@ describe('iter', () => {
     it('should concat more than two iterators', () => {
       deepEqual([...lilit.concat([1, 2, 3], [4, 5, 6], [7, 8, 9])], [1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
+
+    it('should alias to chain', () => equal(lilit.concat, lilit.chain));
   });
 
   describe('zip', () => {
@@ -529,6 +559,12 @@ describe('iter', () => {
       deepEqual([...lilit.product2(g1, g2)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
     });
 
+    it('should pass the python itertools example', () => {
+      const actual = [...lilit.product2('ABCD', 'ABCD')].map(_ => _.join(''))
+      const expect = ['AA', 'AB', 'AC', 'AD', 'BA', 'BB', 'BC', 'BD', 'CA', 'CB', 'CC', 'CD', 'DA', 'DB', 'DC', 'DD'];
+      deepEqual(actual, expect);
+    })
+
     it.skip('should work when passing the same iterator twice', () => {
       const g = lilit.range(0, 3);
       deepEqual([...lilit.product2(g, g)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
@@ -556,19 +592,25 @@ describe('iter', () => {
       const expect = [[0, 1], [0, 2], [1, 2]];
       deepEqual(actual, expect);
     });
+
+    it('should pass the python itertools example', () => {
+      const actual = [...lilit.combinations2('ABCD')].map(_ => _.join(''));
+      const expect = ['AB', 'AC', 'AD', 'BC', 'BD', 'CD'];
+      deepEqual(actual, expect);
+    })
   });
 
-  describe('combinations3', () => {
+  describe.skip('combinations3', () => {
     it('should yield all (unorderd) combinations of length 3', () => {
       const actual = [...lilit.combinations3([0, 1, 2, 3])];
-      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3]];
+      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]];
       deepEqual(actual, expect);
     });
 
     it('should work with iterators (that are only iterable once)', () => {
       const g = lilit.range(0, 4);
       const actual = [...lilit.combinations3(g)];
-      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3]];
+      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3], [1, 2, 3]];
       deepEqual(actual, expect);
     });
 
@@ -583,6 +625,46 @@ describe('iter', () => {
       const expect = [];
       deepEqual(actual, expect);
     });
+
+    it('should pass the python itertools example', () => {
+      const actual = [...lilit.combinations3('ABCD')].map(_ => _.join(''));
+      const expect = ['ABC', 'ABD', 'ACD', 'BCD'];
+      deepEqual(actual, expect);
+    });
+  });
+
+  describe('combinationsWithReplacement2', () => {
+    it('should pass the python itertools example', () => {
+      const actual = [...lilit.combinationsWithReplacement2('ABCD')].map(_ => _.join(''));
+      const expect = ['AA', 'AB', 'AC', 'AD', 'BB', 'BC', 'BD', 'CC', 'CD', 'DD'];
+      deepEqual(actual, expect);
+    });
+  });
+
+  describe.skip('combinationsWithReplacement3', () => {
+    it('should pass the python itertools example', () => {
+      const actual = [...lilit.combinationsWithReplacement3('ABC')].map(_ => _.join(''));
+      const expect = ['AAA', 'AAB', 'AAC', 'ABB', 'ABC', 'ACC', 'BBB', 'BBC', 'BCC', 'CCC'];
+      deepEqual(actual, expect);
+    });
+  });
+
+  describe.skip('permutations2', () => {
+    // # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
+    it("should yield all permutations of length 2", () => {
+      const actual = [...lilit.permutations2('ABCD')].map(_ => _.join(''))
+      const expect = ['AB', 'AC', 'AD', 'BA', 'BC', 'BD', 'CA', 'CB', 'DA', 'DB', 'DC']
+      deepEqual(actual, expect);
+    });
+  });
+
+  describe.skip('permutations3', () => {
+    // # permutations(range(3)) --> 012 021 102 120 201 210
+    it("should yield all permutations of length 3", () => {
+      const actual = [...lilit.permutations3(lilit.range(0, 3))];
+      const expect = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]
+      deepEqual(actual, expect);
+    })
   });
 
   describe('constantly', () => {

@@ -465,6 +465,8 @@ export async function* concat<X>(...xss: ForOfAwaitable<X>[]): AsyncIterableIter
   for (const xs of xss) for await (const x of xs) yield x;
 }
 
+export const chain = concat;
+
 export async function* zip2<X, Y>(xs: ForOfAwaitable<X>, ys: ForOfAwaitable<Y>): AsyncIterableIterator<[X, Y]> {
   const xit = forAwaitableIterator(xs);
   const yit = forAwaitableIterator(ys);
@@ -562,21 +564,22 @@ export async function* combinations2<X>(xs: ForOfAwaitable<X>): AsyncIterableIte
 }
 
 export async function* combinations3<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X, X]> {
-  let [as, bs, cs] = asyncTeeN(xs, 3);
+  throw Error('Not implemented');
+  // let [as, bs, cs] = asyncTeeN(xs, 3);
 
-  let bs2: ForOfAwaitable<X>;
-  let cs2: ForOfAwaitable<X>;
-  let i = 1;
-  let j = 2;
-  for await (const a of as) {
-    [bs, bs2] = asyncTee(bs);
-    for await (const b of skip<X>(i++)(bs2)) {
-      [cs, cs2] = asyncTee(cs);
-      for await (const c of skip<X>(j++)(cs2)) {
-        yield [a, b, c];
-      }
-    }
-  }
+  // let bs2: ForOfAwaitable<X>;
+  // let cs2: ForOfAwaitable<X>;
+  // let i = 1;
+  // let j = 2;
+  // for await (const a of as) {
+  //   [bs, bs2] = asyncTee(bs);
+  //   for await (const b of skip<X>(i++)(bs2)) {
+  //     [cs, cs2] = asyncTee(cs);
+  //     for await (const c of skip<X>(j++)(cs2)) {
+  //       yield [a, b, c];
+  //     }
+  //   }
+  // }
 }
 
 export async function* combinations(xs: ForOfAwaitable<{}>, r: number = 2): AsyncIterableIterator<{}[]> {
@@ -584,11 +587,35 @@ export async function* combinations(xs: ForOfAwaitable<{}>, r: number = 2): Asyn
 }
 
 export async function* combinationsWithReplacement2<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X]> {
-  throw Error('Not implemented');
+  let [as, bs] = asyncTee(xs);
+
+  let bs2: ForOfAwaitable<X>;
+  let i = 0;
+  for await (const a of as) {
+    [bs, bs2] = asyncTee(bs);
+    for await (const b of skip<X>(i++)(bs2)) {
+      yield [a, b];
+    }
+  }
 }
 
 export async function* combinationsWithReplacement3<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X, X]> {
   throw Error('Not implemented');
+  // let [as, bs, cs] = asyncTeeN(xs, 3);
+
+  // let bs2: ForOfAwaitable<X>;
+  // let cs2: ForOfAwaitable<X>;
+  // let i = 0;
+  // let j = 0;
+  // for await (const a of as) {
+  //   [bs, bs2] = asyncTee(bs);
+  //   for await (const b of skip<X>(i++)(bs2)) {
+  //     [cs, cs2] = asyncTee(cs);
+  //     for await (const c of skip<X>(j++)(cs2)) {
+  //       yield [a, b, c];
+  //     }
+  //   }
+  // }
 }
 
 export async function* combinationsWithReplacement(xs: ForOfAwaitable<{}>, r: number = 2): AsyncIterableIterator<{}[]> {

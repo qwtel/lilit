@@ -16,11 +16,17 @@ const WARNING = `
     const content = await readFile('./src/async-iter.ts', 'utf8');
 
     let c = content;
-    c = c.replace(/async function/g, '/*async*/ function');
-    c = c.replace(/(?!for )await\s+/g, '/*await*/ ');
-    c = c.replace(/for await/g, 'for /*await*/');
+
+    c = c.replace(/async function/g, 'function');
+    c = c.replace(/(?!for )await\s+/g, '');
+    c = c.replace(/for await/g, 'for');
+    c = c.replace(/Promise\.all\((.*)\)/g, '$1');
+    // c = c.replace(/async function/g, '/*async*/ function');
+    // c = c.replace(/(?!for )await\s+/g, '/*await*/ ');
+    // c = c.replace(/for await/g, 'for /*await*/');
+    // c = c.replace(/Promise\.all\((.*)\)/g, '/*Promise.all(*/ $1 /*)*/');
+
     c = c.replace(/Symbol\.asyncIterator/g, 'Symbol.iterator');
-    c = c.replace(/Promise\.all\((.*)\)/g, '/*Promise.all(*/ $1 /*)*/');
     c = c.replace(/asyncTee/g, 'tee');
     c = c.replace(/asyncTeeN/g, 'teeN');
     c = c.replace(/forAwaitableIterator/g, 'iterator');
