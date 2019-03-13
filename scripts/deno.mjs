@@ -20,6 +20,8 @@ async function* getFiles(dir) {
 const RE = /^(import|export)\s+(.*)\s+from\s+['"](.+)['"]\s*;*\s*$/gm;
 
 (async () => {
+  if (!fs.existsSync('./deno')) fs.mkdirSync('./deno');
+
   try {
     for await (const f of getFiles('./src')) {
       let c = await readFile(f, 'utf8');
