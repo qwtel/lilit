@@ -14,9 +14,7 @@ export function asyncIterator<T>(xs: AsyncIterable<T>): AsyncIterableIterator<T>
 }
 
 export function forAwaitableIterator<T>(xs: ForOfAwaitable<T>): ForOfAwaitableIterator<T> {
-  return xs[Symbol.asyncIterator]
-    ? asyncIterator(xs as AsyncIterable<T>)
-    : iterator(xs as Iterable<T>);
+  return xs[Symbol.asyncIterator] ? asyncIterator(xs as AsyncIterable<T>) : iterator(xs as Iterable<T>);
 }
 
 export function isIterator(xs: any): boolean {
@@ -60,7 +58,6 @@ export function tee<T>(it: Iterable<T> | Iterator<T>): [Iterable<T>, Iterable<T>
   return [buffer2Iterable(0), buffer2Iterable(1)];
 }
 
-
 export function asyncTee<T>(it: ForOfAwaitable<T> | ForOfAwaitableIterator<T>): [ForOfAwaitable<T>, ForOfAwaitable<T>] {
   if (!isForOfAwaitableIterator(it)) return [it, it] as [ForOfAwaitable<T>, ForOfAwaitable<T>];
 
@@ -100,7 +97,7 @@ export function teeN<T>(it: Iterable<T> | Iterator<T>, n: number = 2): Iterable<
   return res;
 }
 
-export function asyncTeeN<T>(it: ForOfAwaitable<T> | ForOfAwaitableIterator<T>, n: number = 2): AsyncIterable<T>[] {
+export function asyncTeeN<T>(it: ForOfAwaitable<T> | ForOfAwaitableIterator<T>, n: number = 2): ForOfAwaitable<T>[] {
   const res = [];
   let orig = it;
   let copy: ForOfAwaitable<T>;

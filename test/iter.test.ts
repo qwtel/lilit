@@ -72,7 +72,7 @@ describe('iter', () => {
 
   describe('scan', () => {
     it('should be like reduce, but emit each intermediate value', () => {
-      const expect = [1, 3, 6]
+      const expect = [1, 3, 6];
       const actual = [...lilit.scan((a, b: number) => a + b, 0)(xs)];
       deepEqual(actual, expect);
     });
@@ -388,13 +388,13 @@ describe('iter', () => {
 
     it('should group elements', () => {
       const actual = [...lilit.grouped(2)(xs)];
-      const expect = [[1, 2], [3, 4], [5, 6]]
+      const expect = [[1, 2], [3, 4], [5, 6]];
       deepEqual(actual, expect);
     });
 
     it('should overlap values', () => {
       const actual1 = [...lilit.grouped(2, 1)(xs)];
-      const expect1 = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]]
+      const expect1 = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]];
       deepEqual(actual1, expect1);
 
       const actual2 = [...lilit.grouped(3, 1)(xs)];
@@ -404,7 +404,7 @@ describe('iter', () => {
 
     it('should not yield incomplete groups', () => {
       const actual = [...lilit.grouped(3, 2)(xs)];
-      const expect = [[1, 2, 3], [3, 4, 5]]
+      const expect = [[1, 2, 3], [3, 4, 5]];
       deepEqual(actual, expect);
     });
   });
@@ -515,49 +515,75 @@ describe('iter', () => {
     });
   });
 
-  // describe('product', () => {
-  //   it('should build the carthesian product of two iterators', () => {
-  //     deepEqual(
-  //       [...lilit.product([0, 1, 2], lilit.range(0, 3))],
-  //       [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-  //     );
-  //   });
+  describe('product2', () => {
+    it('should build the carthesian product of two iterators', () => {
+      deepEqual(
+        [...lilit.product2([0, 1, 2], lilit.range(0, 3))],
+        [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+      );
+    });
 
-  //   it('should work with iterators (that are only iterable once)', () => {
-  //     const g1 = lilit.range(0, 3);
-  //     const g2 = lilit.range(0, 3);
-  //     deepEqual(
-  //       [...lilit.product(g1, g2)],
-  //       [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-  //     );
-  //   });
+    it('should work with iterators (that are only iterable once)', () => {
+      const g1 = lilit.range(0, 3);
+      const g2 = lilit.range(0, 3);
+      deepEqual([...lilit.product2(g1, g2)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
+    });
 
-  //   it('should work when passing the same iterator twice', () => {
-  //     const g = lilit.range(0, 3);
-  //     deepEqual(
-  //       [...lilit.product(g, g)],
-  //       [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
-  //     );
-  //   });
+    it.skip('should work when passing the same iterator twice', () => {
+      const g = lilit.range(0, 3);
+      deepEqual([...lilit.product2(g, g)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
+    });
+  });
 
-  //   // it('should work with more than two iterators', () => {
-  //   //   deepEqual(
-  //   //     [...lilit.product([0, 1], [0, 1], range(0, 2))],
-  //   //     [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]],
-  //   //   );
-  //   // });
-  // });
+  describe('product3', () => {
+    it('should work with three iterators', () => {
+      const actual = [...lilit.product3([0, 1], [0, 1], lilit.range(0, 2))];
+      const expect = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
+      deepEqual(actual, expect);
+    });
+  });
 
-  // describe('combinations', () => {
-  //   it('should yield all (unorderd) combinations of two iterators', () => {
-  //     deepEqual([...lilit.combinations([0, 1, 2])], [[0, 1], [0, 2], [1, 2]]);
-  //   });
+  describe('combinations2', () => {
+    it('should yield all (unorderd) combinations of length 2', () => {
+      const actual = [...lilit.combinations2([0, 1, 2])];
+      const expect = [[0, 1], [0, 2], [1, 2]];
+      deepEqual(actual, expect);
+    });
 
-  //   it('should work with iterators (that are only iterable once)', () => {
-  //     const g = lilit.range(0, 3);
-  //     deepEqual([...lilit.combinations(g)], [[0, 1], [0, 2], [1, 2]]);
-  //   });
-  // });
+    it('should work with iterators (that are only iterable once)', () => {
+      const g = lilit.range(0, 3);
+      const actual = [...lilit.combinations2(g)];
+      const expect = [[0, 1], [0, 2], [1, 2]];
+      deepEqual(actual, expect);
+    });
+  });
+
+  describe('combinations3', () => {
+    it('should yield all (unorderd) combinations of length 3', () => {
+      const actual = [...lilit.combinations3([0, 1, 2, 3])];
+      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3]];
+      deepEqual(actual, expect);
+    });
+
+    it('should work with iterators (that are only iterable once)', () => {
+      const g = lilit.range(0, 4);
+      const actual = [...lilit.combinations3(g)];
+      const expect = [[0, 1, 2], [0, 1, 3], [0, 2, 3]];
+      deepEqual(actual, expect);
+    });
+
+    it("should return only 1 element when there's only one combination", () => {
+      const actual = [...lilit.combinations3([0, 1, 2])];
+      const expect = [[0, 1, 2]];
+      deepEqual(actual, expect);
+    });
+
+    it("should not return when there arent'enough elements", () => {
+      const actual = [...lilit.combinations3([0, 1])];
+      const expect = [];
+      deepEqual(actual, expect);
+    });
+  });
 
   describe('constantly', () => {
     it('should yield the same value constantly', () => {
@@ -615,22 +641,13 @@ describe('iter', () => {
     });
 
     it('should stop once the first iterator is done', () => {
-      deepEqual(
-        [...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), [3, 6, 9])],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      );
-      deepEqual(
-        [...lilit.interleave([1, 4, 7], [2, 5, 8], lilit.range(3, 100, 3))],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      );
+      deepEqual([...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), [3, 6, 9])], [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      deepEqual([...lilit.interleave([1, 4, 7], [2, 5, 8], lilit.range(3, 100, 3))], [1, 2, 3, 4, 5, 6, 7, 8, 9]);
       deepEqual(
         [...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), lilit.range(3, 100, 3))],
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
       );
-      deepEqual(
-        [...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], [3, 6, 9])],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      );
+      deepEqual([...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], [3, 6, 9])], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
       deepEqual(
         [...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], lilit.range(3, 100, 3))],
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -651,12 +668,30 @@ describe('iter', () => {
     });
   });
 
-  // describe('distinctUntilChanged', () => {
-  //   it('should remove duplicate entries', () => {
-  //     const xs = [1, 1, 1, 2, 2, 3, 4, 4, 4, 4, 5];
-  //     const expect = [1, 2, 3, 4, 5];
-  //     const actual = [...lilit.distinctUntilChanged()(xs)];
-  //     deepEqual(expect, actual);
-  //   });
-  // });
+  describe('distinctUntilChanged', () => {
+    it('should remove consecutive duplicate entries', () => {
+      const xs = [1, 1, 1, 2, 2, 3, 4, 4, 4, 4, 5];
+      const expect = [1, 2, 3, 4, 5];
+      const actual = [...lilit.distinctUntilChanged()(xs)];
+      deepEqual(expect, actual);
+    });
+  });
+
+  describe('unique', () => {
+    it('should remove duplicate entries and retain the order', () => {
+      const xs = [3, 4, 2, 4, 6, 3, 3, 6, 7, 1, 2, 3];
+      const expect = [3, 4, 2, 6, 7, 1];
+      const actual = [...lilit.unique()(xs)];
+      deepEqual(expect, actual);
+    });
+  });
+
+  describe('uniqueSorted', () => {
+    it('should remove duplicate entries and sort the elements', () => {
+      const xs = [3, 4, 2, 4, 6, 3, 3, 6, 7, 1, 2, 3];
+      const expect = [1, 2, 3, 4, 6, 7];
+      const actual = [...lilit.uniqueSorted()(xs)];
+      deepEqual(expect, actual);
+    });
+  });
 });
