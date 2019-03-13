@@ -583,6 +583,30 @@ export async function* combinations(xs: ForOfAwaitable<{}>, r: number = 2): Asyn
   throw Error('Not implemented');
 }
 
+export async function* combinationsWithReplacement2<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X]> {
+  throw Error('Not implemented');
+}
+
+export async function* combinationsWithReplacement3<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X, X]> {
+  throw Error('Not implemented');
+}
+
+export async function* combinationsWithReplacement(xs: ForOfAwaitable<{}>, r: number = 2): AsyncIterableIterator<{}[]> {
+  throw Error('Not implemented');
+}
+
+export async function* permutations2<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X]> {
+  throw Error('Not implemented');
+}
+
+export async function* permutations3<X>(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X, X]> {
+  throw Error('Not implemented');
+}
+
+export async function* permutations(xs: ForOfAwaitable<{}>, r: number = 2): AsyncIterableIterator<{}[]> {
+  throw Error('Not implemented');
+}
+
 export async function* constantly<X>(value: X): AsyncIterableIterator<X> {
   while (true) yield value;
 }
