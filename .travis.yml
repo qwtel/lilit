@@ -9,6 +9,7 @@ deploy:
   on:
     tags: true
     repo: qwtel/lilit
+  skip_cleanup: true
 notifications:
   email:
     on_success: never
