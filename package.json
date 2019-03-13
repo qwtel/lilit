@@ -15,10 +15,11 @@
     "test": "npm run build:pre && mocha --require ts-node/register test/*.test.ts",
     "build": "npm run build:pre && (npm run build:mjs & npm run build:cjs & npm run build:es5 & npm run build:deno & wait)",
     "build:pre": "node --experimental-modules --no-warnings scripts/build.mjs",
-    "build:mjs": "rm -rf mjs && tsc -p tsconfig.mjs.json -d && rename 's/\\.js$/.mjs/' mjs/*",
+    "build:mjs": "rm -rf mjs && tsc -p tsconfig.mjs.json -d && rename 's/\\.js$/.mjs/' mjs/* && npm run build:mjs:imp",
+    "build:mjs:imp": "node --experimental-modules --no-warnings scripts/mjs.mjs",
     "build:cjs": "tsc -p tsconfig.json -d",
     "build:es5": "tsc -p tsconfig.es5.json -d",
-    "build:deno": "node --experimental-modules --no-warnings scripts/deno.mjs",
+    "build:deno": "node --experimental-modules --no-warnings scripts/ts.mjs",
     "format": "prettier --write '{src,test}/*.{js,ts}'",
     "preversion": "npm run format && npm test && git add -u",
     "prepack": "npm run clean && npm run build"
