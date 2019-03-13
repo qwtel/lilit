@@ -20,7 +20,7 @@
     "build:es5": "tsc -p tsconfig.es5.json",
     "format": "prettier --write '{src,test}/*.{js,ts}'",
     "preversion": "npm run format && npm test && git add -u",
-    "prepublishOnly": "npm run build"
+    "prepack": "npm run build"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",
