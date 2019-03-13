@@ -20,9 +20,15 @@ async function* getFiles(dir) {
 const RE = /^(import|export)\s+(.*)\s+from\s+['"](.+)['"]\s*;*\s*$/gm;
 
 (async () => {
+  try {
     for await (const f of getFiles('./src')) {
-        let c = await readFile(f, 'utf8');
-        c = c.replace(RE, "$1 $2 from '$3.ts';");
-        await writeFile('./deno/' + basename(f), c, 'utf8');
+      let c = await readFile(f, 'utf8');
+      c = c.replace(RE, "$1 $2 from '$3.ts';");
+      await writeFile('./deno/' + basename(f), c, 'utf8');
     }
+    process.exit(0);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 })();
