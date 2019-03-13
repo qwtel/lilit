@@ -8,19 +8,20 @@
     "mjs",
     "cjs",
     "es5",
-    "src"
+    "deno"
   ],
   "scripts": {
-    "clean": "rm -rf cjs es5 mjs",
+    "clean": "rm -rf cjs es5 mjs deno",
     "test": "npm run build:pre && mocha --require ts-node/register test/*.test.ts",
-    "build": "npm run build:pre && (npm run build:mjs & npm run build:cjs & npm run build:es5 & wait)",
+    "build": "npm run build:pre && (npm run build:mjs & npm run build:cjs & npm run build:es5 & npm run build:deno & wait)",
     "build:pre": "node --experimental-modules --no-warnings scripts/build.mjs",
     "build:mjs": "rm -rf mjs && tsc -p tsconfig.mjs.json && rename 's/\\.js$/.mjs/' mjs/*",
     "build:cjs": "tsc -p tsconfig.json",
     "build:es5": "tsc -p tsconfig.es5.json",
+    "build:deno": "./scripts/deno.mjs",
     "format": "prettier --write '{src,test}/*.{js,ts}'",
     "preversion": "npm run format && npm test && git add -u",
-    "prepack": "npm run build"
+    "prepack": "npm run clean && npm run build"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",
