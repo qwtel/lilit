@@ -11,13 +11,13 @@ export async function pipe(x: any, ...fs: Function[]): Promise<{}> {
 // OPERATORS
 
 export function map<A, B>(f: (x: A) => B) {
-  return async function*(xs: ForOfAwaitable<A>): AsyncIterableIterator<B> {
+  return async function* (xs: ForOfAwaitable<A>): AsyncIterableIterator<B> {
     for await (const x of xs) yield f(x);
   };
 }
 
 export function tap<X>(f: (x: X) => any) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     for await (const x of xs) {
       f(x);
       yield x;
@@ -28,7 +28,7 @@ export function tap<X>(f: (x: X) => any) {
 export const inspect = tap;
 
 export function forEach<X>(f: (x: X) => any) {
-  return async function(xs: ForOfAwaitable<X>): Promise<void> {
+  return async function (xs: ForOfAwaitable<X>): Promise<void> {
     for await (const x of xs) f(x);
   };
 }
@@ -36,7 +36,7 @@ export function forEach<X>(f: (x: X) => any) {
 export const subscribe = forEach;
 
 export function reduce<X, R>(f: (acc: R, x: X) => R, init: R) {
-  return async function(xs: ForOfAwaitable<X>): Promise<R> {
+  return async function (xs: ForOfAwaitable<X>): Promise<R> {
     let res = init;
     for await (const x of xs) {
       res = f(res, x);
@@ -46,7 +46,7 @@ export function reduce<X, R>(f: (acc: R, x: X) => R, init: R) {
 }
 
 export function scan<X, R>(f: (acc: R, x: X) => R, init: R) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<R> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<R> {
     let res = init;
     for await (const x of xs) {
       res = f(res, x);
@@ -58,7 +58,7 @@ export function scan<X, R>(f: (acc: R, x: X) => R, init: R) {
 export const reducutions = scan;
 
 export function some<X>(p: (x: X) => boolean) {
-  return async function(xs: ForOfAwaitable<X>): Promise<boolean> {
+  return async function (xs: ForOfAwaitable<X>): Promise<boolean> {
     for await (const x of xs) {
       if (p(x)) return true;
     }
@@ -67,7 +67,7 @@ export function some<X>(p: (x: X) => boolean) {
 }
 
 export function every<X>(p: (x: X) => boolean) {
-  return async function(xs: ForOfAwaitable<X>): Promise<boolean> {
+  return async function (xs: ForOfAwaitable<X>): Promise<boolean> {
     for await (const x of xs) {
       if (!p(x)) return false;
     }
@@ -76,7 +76,7 @@ export function every<X>(p: (x: X) => boolean) {
 }
 
 export function filter<X>(p: (x: X) => boolean) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     for await (const x of xs) {
       if (p(x)) yield x;
     }
@@ -84,14 +84,14 @@ export function filter<X>(p: (x: X) => boolean) {
 }
 
 export function partition<X>(p: (x: X) => boolean) {
-  return function(xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
+  return function (xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
     const [xs1, xs2] = asyncTee(xs);
     return [filter(p)(xs1), filter((x: X) => !p(x))(xs2)];
   };
 }
 
 export function skip<X>(n: number) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     let i = 0;
     for await (const x of xs) {
       if (++i <= n) continue;
@@ -101,7 +101,7 @@ export function skip<X>(n: number) {
 }
 
 export function take<X>(n: number) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     let i = 0;
     for await (const x of xs) {
       if (++i > n) break;
@@ -112,7 +112,7 @@ export function take<X>(n: number) {
 
 // TODO: rename?
 export function partitionAt<X>(n: number) {
-  return function(xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
+  return function (xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
     const [xs1, xs2] = asyncTee(xs);
     return [take<X>(n)(xs1), skip<X>(n)(xs2)];
   };
@@ -121,7 +121,7 @@ export function partitionAt<X>(n: number) {
 export const splitAt = partitionAt;
 
 export function skipWhile<X>(f: (x: X) => boolean) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     const it = forAwaitableIterator(xs);
     let first: X;
     for await (const x of it) {
@@ -134,7 +134,7 @@ export function skipWhile<X>(f: (x: X) => boolean) {
 }
 
 export function takeWhile<X>(f: (x: X) => boolean) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     for await (const x of xs) {
       if (f(x)) yield x;
       else break;
@@ -143,14 +143,14 @@ export function takeWhile<X>(f: (x: X) => boolean) {
 }
 
 export function partitionWhile<X>(f: (x: X) => boolean) {
-  return function(xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
+  return function (xs: ForOfAwaitable<X>): [AsyncIterableIterator<X>, AsyncIterableIterator<X>] {
     const [xs1, xs2] = asyncTee(xs);
     return [takeWhile<X>(f)(xs1), skipWhile<X>(f)(xs2)];
   };
 }
 
 export function find<X>(p: (x: X) => boolean) {
-  return async function(xs: ForOfAwaitable<X>): Promise<X | null> {
+  return async function (xs: ForOfAwaitable<X>): Promise<X | null> {
     for await (const x of xs) {
       if (p(x)) return x;
     }
@@ -159,7 +159,7 @@ export function find<X>(p: (x: X) => boolean) {
 }
 
 export function findIndex<X>(p: (x: X) => boolean) {
-  return async function(xs: ForOfAwaitable<X>): Promise<number> {
+  return async function (xs: ForOfAwaitable<X>): Promise<number> {
     let i = 0;
     for await (const x of xs) {
       if (p(x)) return i;
@@ -169,66 +169,15 @@ export function findIndex<X>(p: (x: X) => boolean) {
   };
 }
 
-// export function concatWith1(ys) {
-//     return function (xs) {
-//         return concat(xs, ys);
-//     }
-// }
-
-// export function concatWith(...yss) {
-//     return function (xs) {
-//         return concat(xs, ...yss);
-//     };
-// }
-
-// export function zipWith1(ys) {
-//     return function* (xs) {
-//         const it = ys[Symbol.asyncIterator]();
-//         for await (const x of xs) {
-//             yield [x, (await it.next()).value];
-//         }
-//     };
-// }
-
-// export function zipWith(...yss) {
-//     return function* (xs) {
-//         const its = yss.map(ys => ys[Symbol.asyncIterator]());
-//         for await (const x of xs) {
-//             yield [x, ...its.map(it => it.next().value)];
-//         }
-//     };
-// }
-
 export function pluck<X>(key: string | number) {
-  return async function*(xs: ForOfAwaitable<Object>): AsyncIterableIterator<X | null> {
+  return async function* (xs: ForOfAwaitable<Object>): AsyncIterableIterator<X | null> {
     for await (const x of xs) yield x[key];
-  };
-}
-
-export function unzip2<X, Y>() {
-  return function(xs: ForOfAwaitable<[X, Y]>): [AsyncIterableIterator<X>, AsyncIterableIterator<Y>] {
-    const [xs1, xs2] = asyncTee(xs);
-    return [pluck<X>(0)(xs1), pluck<Y>(1)(xs2)];
-  };
-}
-
-export function unzip3<X, Y, Z>() {
-  return function(xs: ForOfAwaitable<[X, Y, Z]>): [AsyncIterableIterator<X>, AsyncIterableIterator<Y>, AsyncIterableIterator<Z>] {
-    const [xs1, xs2, xs3] = asyncTeeN(xs, 3);
-    return [pluck<X>(0)(xs1), pluck<Y>(1)(xs2), pluck<Z>(2)(xs3)];
-  };
-}
-
-export function unzip(n: number = 2) {
-  return function(xs: ForOfAwaitable<{}[]>): AsyncIterableIterator<{}>[] {
-    const xss = asyncTeeN(xs, n);
-    return xss.map((xs, i) => pluck(i)(xs));
   };
 }
 
 // like pluck, but accepts an iterable of keys
 export function select<X>(keys: Array<string | number>) {
-  return async function*(xs: ForOfAwaitable<Object>): AsyncIterableIterator<X | null> {
+  return async function* (xs: ForOfAwaitable<Object>): AsyncIterableIterator<X | null> {
     for await (const x of xs) {
       let r = x;
       for (const k of keys) {
@@ -239,8 +188,29 @@ export function select<X>(keys: Array<string | number>) {
   };
 }
 
+export function unzip2<X, Y>() {
+  return function (xs: ForOfAwaitable<[X, Y]>): [AsyncIterableIterator<X>, AsyncIterableIterator<Y>] {
+    const [xs1, xs2] = asyncTee(xs);
+    return [pluck<X>(0)(xs1), pluck<Y>(1)(xs2)];
+  };
+}
+
+export function unzip3<X, Y, Z>() {
+  return function (xs: ForOfAwaitable<[X, Y, Z]>): [AsyncIterableIterator<X>, AsyncIterableIterator<Y>, AsyncIterableIterator<Z>] {
+    const [xs1, xs2, xs3] = asyncTeeN(xs, 3);
+    return [pluck<X>(0)(xs1), pluck<Y>(1)(xs2), pluck<Z>(2)(xs3)];
+  };
+}
+
+export function unzip(n: number = 2) {
+  return function (xs: ForOfAwaitable<{}[]>): AsyncIterableIterator<{}>[] {
+    const xss = asyncTeeN(xs, n);
+    return xss.map((xs, i) => pluck(i)(xs));
+  };
+}
+
 export function groupBy<X, K>(f: (x: X) => K) {
-  return async function(xs: ForOfAwaitable<X>): Promise<Map<K, X[]>> {
+  return async function (xs: ForOfAwaitable<X>): Promise<Map<K, X[]>> {
     const res = new Map<K, X[]>();
     for await (const x of xs) {
       const key = f(x);
@@ -255,20 +225,20 @@ export function groupByKey<X>(key: string | number) {
   return groupBy<X, string | number>((x: X) => x[key]);
 }
 
-export function mapKeys<A, B>(f: (k: A) => B) {
-  return async function*(xs: ForOfAwaitable<[A, {}]>): AsyncIterableIterator<[B, {}]> {
+export function mapKeys<A, B, U>(f: (k: A) => B) {
+  return async function* (xs: ForOfAwaitable<[A, U]>): AsyncIterableIterator<[B, U]> {
     for await (const [k, v] of xs) yield [f(k), v];
   };
 }
 
-export function mapValues<A, B>(f: (v: A) => B) {
-  return async function*(xs: ForOfAwaitable<[{}, A]>): AsyncIterableIterator<[{}, B]> {
+export function mapValues<A, B, U>(f: (v: A) => B) {
+  return async function* (xs: ForOfAwaitable<[U, A]>): AsyncIterableIterator<[U, B]> {
     for await (const [k, v] of xs) yield [k, f(v)];
   };
 }
 
 export function pairwise<X>() {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X]> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<[X, X]> {
     const it = forAwaitableIterator(xs);
     let prev = (await it.next()).value;
     for await (const x of it) {
@@ -279,7 +249,7 @@ export function pairwise<X>() {
 }
 
 export function length() {
-  return async function(xs: ForOfAwaitable<{}>): Promise<number> {
+  return async function (xs: ForOfAwaitable<{}>): Promise<number> {
     let c = 0;
     for await (const _ of xs) c++;
     return c;
@@ -287,7 +257,7 @@ export function length() {
 }
 
 export function min() {
-  return async function(xs: ForOfAwaitable<number>): Promise<number> {
+  return async function (xs: ForOfAwaitable<number>): Promise<number> {
     let res = Number.POSITIVE_INFINITY;
     for await (const x of xs) {
       if (x < res) res = x;
@@ -297,7 +267,7 @@ export function min() {
 }
 
 export function max() {
-  return async function(xs: ForOfAwaitable<number>): Promise<number> {
+  return async function (xs: ForOfAwaitable<number>): Promise<number> {
     let res = Number.NEGATIVE_INFINITY;
     for await (const x of xs) {
       if (x > res) res = x;
@@ -307,7 +277,7 @@ export function max() {
 }
 
 export function minMax() {
-  return async function(xs: ForOfAwaitable<number>): Promise<[number, number]> {
+  return async function (xs: ForOfAwaitable<number>): Promise<[number, number]> {
     let min = Number.POSITIVE_INFINITY;
     let max = Number.NEGATIVE_INFINITY;
     for await (const x of xs) {
@@ -319,32 +289,32 @@ export function minMax() {
 }
 
 export function minBy<X>(cf: (a: X, b: X) => number) {
-  return async function(xs: ForOfAwaitable<X>): Promise<X | number> {
+  return async function (xs: ForOfAwaitable<X>): Promise<X | null> {
     const it = forAwaitableIterator(xs);
     const { done, value } = await it.next();
-    if (done) return Number.POSITIVE_INFINITY;
+    if (done) return null;
     let res = value;
     for await (const x of it) if (cf(x, res) < 0) res = x;
     return res;
   };
 }
 
-export function maxBy(cf = (a, b) => a - b) {
-  return async function(xs) {
+export function maxBy<X>(cf: (a: X, b: X) => number) {
+  return async function (xs: ForOfAwaitable<X>): Promise<X | null> {
     const it = forAwaitableIterator(xs);
     const { done, value } = await it.next();
-    if (done) return Number.NEGATIVE_INFINITY;
+    if (done) return null;
     let res = value;
     for await (const x of it) if (cf(x, res) > 0) res = x;
     return res;
   };
 }
 
-export function minMaxBy(cf = (a, b) => a - b) {
-  return async function(xs) {
+export function minMaxBy<X>(cf: (a: X, b: X) => number) {
+  return async function (xs: ForOfAwaitable<X>): Promise<[X | null, X | null]> {
     const it = forAwaitableIterator(xs);
     const { done, value } = await it.next();
-    if (done) return [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
+    if (done) return [null, null];
     let min = value;
     let max = value;
     for await (const x of it) {
@@ -355,36 +325,34 @@ export function minMaxBy(cf = (a, b) => a - b) {
   };
 }
 
-export function minByScan(cf = (a, b) => a - b) {
-  return async function*(xs) {
+export function minByScan<X>(cf: (a: X, b: X) => number) {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterable<X | null> {
     const it = forAwaitableIterator(xs);
     const { done, value } = await it.next();
-    if (done) yield Number.POSITIVE_INFINITY;
+    if (done) yield null;
     let res = value;
-    for await (const x of it)
-      if (cf(x, res) < 0) {
-        res = x;
-        yield res;
-      }
+    for await (const x of it) {
+      if (cf(x, res) < 0) res = x;
+      yield res;
+    }
   };
 }
 
-export function maxByScan(cf = (a, b) => a - b) {
-  return async function*(xs) {
+export function maxByScan<X>(cf: (a: X, b: X) => number) {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterable<X | null> {
     const it = forAwaitableIterator(xs);
     const { done, value } = await it.next();
-    if (done) yield Number.NEGATIVE_INFINITY;
+    if (done) yield null;
     let res = value;
-    for await (const x of it)
-      if (cf(x, res) > 0) {
-        res = x;
-        yield res;
-      }
+    for await (const x of it) {
+      if (cf(x, res) > 0) res = x;
+      yield res;
+    }
   };
 }
 
-export function sum(zero = 0) {
-  return async function(xs: ForOfAwaitable<number>): Promise<number> {
+export function sum(zero: number = 0) {
+  return async function (xs: ForOfAwaitable<number>): Promise<number> {
     let res = zero;
     for await (const x of xs) res += x;
     return res;
@@ -392,7 +360,7 @@ export function sum(zero = 0) {
 }
 
 export function replaceWhen<X, Y>(pf: (x: X) => boolean, ys: ForOfAwaitable<Y>) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X | Y> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X | Y> {
     for await (const [x, y] of zip2(xs, ys)) {
       if (!pf(x)) yield x;
       else yield y;
@@ -400,8 +368,8 @@ export function replaceWhen<X, Y>(pf: (x: X) => boolean, ys: ForOfAwaitable<Y>) 
   };
 }
 
-export function grouped<X>(n: number, step = n) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X[]> {
+export function grouped<X>(n: number, step: number = n) {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X[]> {
     let group = [];
     for await (const x of xs) {
       group.push(x);
@@ -414,14 +382,14 @@ export function grouped<X>(n: number, step = n) {
 }
 
 export function startWith<X>(...as: X[]) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     for await (const a of as) yield a;
     for await (const x of xs) yield x;
   };
 }
 
 export function endWith<X>(...zs: X[]) {
-  return async function*(xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterableIterator<X> {
     for await (const x of xs) yield x;
     for await (const z of zs) yield z;
   };
@@ -439,16 +407,16 @@ export function endWith<X>(...zs: X[]) {
 //     }
 // }
 
-export function sort(cf) {
-  return async function*(xs) {
+export function sort<X>(cf: (a: X, b: X) => number) {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterable<X> {
     let arr = [];
     for await (const x of xs) arr.push(x);
     for (const x of arr.sort(cf)) yield x;
   };
 }
 
-export function sortScan(cf) {
-  return async function*(xs) {
+export function sortScan<X>(cf: (a: X, b: X) => number) {
+  return async function* (xs: ForOfAwaitable<X>): AsyncIterable<X[]> {
     let arr = [];
     for await (const x of xs) {
       arr.push(x);
@@ -458,7 +426,7 @@ export function sortScan(cf) {
 }
 
 export function flatMap<A, B>(f: (x: A) => B) {
-  return async function*(xss: ForOfAwaitable<ForOfAwaitable<A>>): AsyncIterableIterator<B> {
+  return async function* (xss: ForOfAwaitable<ForOfAwaitable<A>>): AsyncIterableIterator<B> {
     for await (const xs of xss) for await (const x of xs) yield await f(x);
   };
 }

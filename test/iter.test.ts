@@ -337,8 +337,8 @@ describe('iter', () => {
     it('should find the smallest element in a sequence', () => {
       deepEqual(lilit.minBy(cf)([{ x: 3 }, { x: 8 }, { x: 2 }, { x: 9 }, { x: 4 }]), { x: 2 });
     });
-    it('should return infinity for an empty list', () => {
-      deepEqual(lilit.minBy(cf)([]), Number.POSITIVE_INFINITY);
+    it('should return null for an empty list', () => {
+      deepEqual(lilit.minBy(cf)([]), null);
     });
     it('should return the element for a single entry list', () => {
       deepEqual(lilit.minBy(cf)([{ x: 3 }]), { x: 3 });
@@ -349,8 +349,8 @@ describe('iter', () => {
     it('should find the largest element in a sequence', () => {
       deepEqual(lilit.maxBy(cf)([{ x: 3 }, { x: 8 }, { x: 2 }, { x: 9 }, { x: 4 }]), { x: 9 });
     });
-    it('should return infinity for an empty list', () => {
-      deepEqual(lilit.maxBy(cf)([]), Number.NEGATIVE_INFINITY);
+    it('should return null for an empty list', () => {
+      deepEqual(lilit.maxBy(cf)([]), null);
     });
     it('should return the element for a single entry list', () => {
       deepEqual(lilit.maxBy(cf)([{ x: 3 }]), { x: 3 });
@@ -361,8 +361,8 @@ describe('iter', () => {
     it('should find the samllest and largest element in a sequence', () => {
       deepEqual(lilit.minMaxBy(cf)([{ x: 3 }, { x: 8 }, { x: 2 }, { x: 9 }, { x: 4 }]), [{ x: 2 }, { x: 9 }]);
     });
-    it('should return infinity for an empty list', () => {
-      deepEqual(lilit.minMaxBy(cf)([]), [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]);
+    it('should return null for an empty list', () => {
+      deepEqual(lilit.minMaxBy(cf)([]), [null, null]);
     });
     it('should return the element for a single entry list', () => {
       deepEqual(lilit.minMaxBy(cf)([{ x: 3 }]), [{ x: 3 }, { x: 3 }]);
