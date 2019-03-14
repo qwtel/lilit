@@ -221,14 +221,14 @@ export function groupByKey<X>(key: string | number) {
   return groupBy<X, string | number>((x: X) => x[key]);
 }
 
-export function mapKeys<A, B, U>(f: (k: A) => B) {
-  return async function*(xs: ForOfAwaitable<[A, U]>): AsyncIterableIterator<[B, U]> {
+export function mapKeys<KA, KB, V>(f: (k: KA) => KB) {
+  return async function*(xs: ForOfAwaitable<[KA, V]>): AsyncIterableIterator<[KB, V]> {
     for await (const [k, v] of xs) yield [f(k), v];
   };
 }
 
-export function mapValues<A, B, U>(f: (v: A) => B) {
-  return async function*(xs: ForOfAwaitable<[U, A]>): AsyncIterableIterator<[U, B]> {
+export function mapValues<VA, VB, K>(f: (v: VA) => VB) {
+  return async function*(xs: ForOfAwaitable<[K, VA]>): AsyncIterableIterator<[K, VB]> {
     for await (const [k, v] of xs) yield [k, f(v)];
   };
 }

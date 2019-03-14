@@ -225,14 +225,14 @@ export function groupByKey<X>(key: string | number) {
   return groupBy<X, string | number>((x: X) => x[key]);
 }
 
-export function mapKeys<A, B, U>(f: (k: A) => B) {
-  return function*(xs: Iterable<[A, U]>): IterableIterator<[B, U]> {
+export function mapKeys<KA, KB, V>(f: (k: KA) => KB) {
+  return function*(xs: Iterable<[KA, V]>): IterableIterator<[KB, V]> {
     for (const [k, v] of xs) yield [f(k), v];
   };
 }
 
-export function mapValues<A, B, U>(f: (v: A) => B) {
-  return function*(xs: Iterable<[U, A]>): IterableIterator<[U, B]> {
+export function mapValues<VA, VB, K>(f: (v: VA) => VB) {
+  return function*(xs: Iterable<[K, VA]>): IterableIterator<[K, VB]> {
     for (const [k, v] of xs) yield [k, f(v)];
   };
 }
