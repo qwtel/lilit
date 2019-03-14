@@ -20,9 +20,9 @@ async function* getFiles(dir) {
 const RE = /^[ \t]*(import|export)\s+(.*)\s+from\s+['"](.+)['"][ \t;]*$/gm;
 
 (async () => {
-  if (!fs.existsSync('./ts')) fs.mkdirSync('./ts');
-
   try {
+    if (!fs.existsSync('./ts')) fs.mkdirSync('./ts');
+
     for await (const f of getFiles('./src')) {
       let c = await readFile(f, 'utf8');
       c = c.replace(RE, "$1 $2 from '$3.ts';");
