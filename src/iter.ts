@@ -11,20 +11,20 @@ export function pipe<T1>(x: T1): T1;
 export function pipe<T1, T2>(x: T1, f1: (a: T1) => T2): T2;
 export function pipe<T1, T2, T3>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3): T3;
 export function pipe<T1, T2, T3, T4>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
 ): T4;
 export function pipe<T1, T2, T3, T4, T5>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
   f4: (a: T4) => T5,
 ): T5;
 export function pipe<T1, T2, T3, T4, T5, T6>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
@@ -32,7 +32,7 @@ export function pipe<T1, T2, T3, T4, T5, T6>(
   f5: (a: T5) => T6,
 ): T6;
 export function pipe<T1, T2, T3, T4, T5, T6, T7>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
@@ -41,7 +41,7 @@ export function pipe<T1, T2, T3, T4, T5, T6, T7>(
   f6: (a: T6) => T7,
 ): T7;
 export function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
@@ -51,7 +51,7 @@ export function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
   f7: (a: T7) => T8,
 ): T8;
 export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
@@ -62,7 +62,7 @@ export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
   f8: (a: T8) => T9,
 ): T9;
 export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
@@ -74,7 +74,7 @@ export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
   f9: (a: T9) => T10,
 ): T10;
 export function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
-  x: () => T1,
+  x: T1,
   f1: (a: T1) => T2,
   f2: (a: T2) => T3,
   f3: (a: T3) => T4,
