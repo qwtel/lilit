@@ -2,87 +2,6 @@ import { asyncTee, asyncTeeN, forAwaitableIterator } from './common';
 
 import { ForOfAwaitable } from './common';
 
-// https://github.com/Microsoft/TypeScript/issues/17718#issuecomment-402931751
-export async function pipe<T1>(x: T1): Promise<T1>;
-export async function pipe<T1, T2>(x: T1, f1: (a: T1) => T2): Promise<T2>;
-export async function pipe<T1, T2, T3>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3): Promise<T3>;
-export async function pipe<T1, T2, T3, T4>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4): Promise<T4>;
-export async function pipe<T1, T2, T3, T4, T5>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-): Promise<T5>;
-export async function pipe<T1, T2, T3, T4, T5, T6>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-): Promise<T6>;
-export async function pipe<T1, T2, T3, T4, T5, T6, T7>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-  f6: (a: T6) => T7,
-): Promise<T7>;
-export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-  f6: (a: T6) => T7,
-  f7: (a: T7) => T8,
-): Promise<T8>;
-export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-  f6: (a: T6) => T7,
-  f7: (a: T7) => T8,
-  f8: (a: T8) => T9,
-): Promise<T9>;
-export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-  f6: (a: T6) => T7,
-  f7: (a: T7) => T8,
-  f8: (a: T8) => T9,
-  f9: (a: T9) => T10,
-): Promise<T10>;
-export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-  f4: (a: T4) => T5,
-  f5: (a: T5) => T6,
-  f6: (a: T6) => T7,
-  f7: (a: T7) => T8,
-  f8: (a: T8) => T9,
-  f9: (a: T9) => T10,
-  f10: (a: T10) => T11,
-): Promise<T11>;
-export async function pipe(x: any, ...fs: Function[]): Promise<any> {
-  let res = x;
-  for (const f of fs) res = await f(res);
-  return res;
-}
-
 // OPERATORS
 
 export function map<A, B>(f: (x: A) => B) {
@@ -774,4 +693,100 @@ export async function* interleave(...xss: ForOfAwaitable<{}>[]): AsyncIterableIt
       else yield value;
     }
   }
+}
+
+// https://github.com/Microsoft/TypeScript/issues/17718#issuecomment-402931751
+export async function pipe<T1>(x: T1): Promise<T1>;
+export async function pipe<T1, T2>(x: T1, f1: (x: T1) => T2): Promise<T2>;
+export async function pipe<T1, T2, T3>(x: T1, f1: (x: T1) => T2, f2: (x: T2) => T3): Promise<T3>;
+export async function pipe<T1, T2, T3, T4>(x: T1, f1: (x: T1) => T2, f2: (x: T2) => T3, f3: (x: T3) => T4): Promise<T4>;
+export async function pipe<T1, T2, T3, T4, T5>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+): Promise<T5>;
+export async function pipe<T1, T2, T3, T4, T5, T6>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+): Promise<T6>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+): Promise<T7>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+  f7: (x: T7) => T8,
+): Promise<T8>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+  f7: (x: T7) => T8,
+  f8: (x: T8) => T9,
+): Promise<T9>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+  f7: (x: T7) => T8,
+  f8: (x: T8) => T9,
+  f9: (x: T9) => T10,
+): Promise<T10>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+  f7: (x: T7) => T8,
+  f8: (x: T8) => T9,
+  f9: (x: T9) => T10,
+  f10: (x: T10) => T11,
+): Promise<T11>;
+export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+  x: T1,
+  f1: (x: T1) => T2,
+  f2: (x: T2) => T3,
+  f3: (x: T3) => T4,
+  f4: (x: T4) => T5,
+  f5: (x: T5) => T6,
+  f6: (x: T6) => T7,
+  f7: (x: T7) => T8,
+  f8: (x: T8) => T9,
+  f9: (x: T9) => T10,
+  f10: (x: T10) => T11,
+  f11: (x: T11) => T12,
+): Promise<T12>;
+
+export async function pipe(x: any, ...fs: Function[]): Promise<any> {
+  let res = x;
+  for (const f of fs) res = await f(res);
+  return res;
 }

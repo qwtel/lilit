@@ -4,20 +4,22 @@ An iterator library that is so simple you could have written it yourself.
 
 ECMAScriopt's new (async) generator functions are powerful and almost seem to be designed to build libraries like these.
 
-## What
-- [x] Sync iterator version
-- [x] Async iterator version
-- [ ] [itertools] feature parity
+## What's Included
+- [x] [Sync iterator version](./src/iter.ts)
+- [x] [Async iterator version](./src/async-iter.ts)
+- [ ] [itertools] Feature Parity
 - [x] Type Declarations
 - [ ] Typedoc
-- [x] Basic tests
-- [ ] Advanced tests
+- [x] Basic Tests
+- [ ] Advanced Tests
 - [x] Usable everywhere
-    - [x] Deno
+    - [x] [Deno]
     - [x] Node Modules
     - [x] Node Require
     - [x] Browser Imports
+- [ ] 1.0 Release
 
+[deno]: https://deno.land
 [itertools]: https://docs.python.org/2/library/itertools.html
 
 ## How to Use
