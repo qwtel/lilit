@@ -1,6 +1,6 @@
 {
   "name": "lilit",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "",
   "main": "cjs/index.js",
   "module": "mjs/index.mjs",

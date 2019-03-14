@@ -564,7 +564,10 @@ describe('iter', () => {
     it('should work with iterators (that are only iterable once)', () => {
       const g1 = lilit.range(0, 3);
       const g2 = lilit.range(0, 3);
-      assert.deepEqual([...lilit.product2(g1, g2)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
+      assert.deepEqual(
+        [...lilit.product2(g1, g2)],
+        [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+      );
     });
 
     it('should pass the python itertools example', () => {
@@ -575,7 +578,10 @@ describe('iter', () => {
 
     it.skip('should work when passing the same iterator twice', () => {
       const g = lilit.range(0, 3);
-      assert.deepEqual([...lilit.product2(g, g)], [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
+      assert.deepEqual(
+        [...lilit.product2(g, g)],
+        [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+      );
     });
   });
 
@@ -731,13 +737,22 @@ describe('iter', () => {
     });
 
     it('should stop once the first iterator is done', () => {
-      assert.deepEqual([...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), [3, 6, 9])], [1, 2, 3, 4, 5, 6, 7, 8, 9]);
-      assert.deepEqual([...lilit.interleave([1, 4, 7], [2, 5, 8], lilit.range(3, 100, 3))], [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      assert.deepEqual(
+        [...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), [3, 6, 9])],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      );
+      assert.deepEqual(
+        [...lilit.interleave([1, 4, 7], [2, 5, 8], lilit.range(3, 100, 3))],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      );
       assert.deepEqual(
         [...lilit.interleave([1, 4, 7], lilit.range(2, 100, 3), lilit.range(3, 100, 3))],
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
       );
-      assert.deepEqual([...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], [3, 6, 9])], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      assert.deepEqual(
+        [...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], [3, 6, 9])],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      );
       assert.deepEqual(
         [...lilit.interleave(lilit.range(1, 100, 3), [2, 5, 8], lilit.range(3, 100, 3))],
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
