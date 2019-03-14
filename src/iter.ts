@@ -10,12 +10,7 @@ import { tee, teeN, iterator } from './common';
 export function pipe<T1>(x: T1): T1;
 export function pipe<T1, T2>(x: T1, f1: (a: T1) => T2): T2;
 export function pipe<T1, T2, T3>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3): T3;
-export function pipe<T1, T2, T3, T4>(
-  x: T1,
-  f1: (a: T1) => T2,
-  f2: (a: T2) => T3,
-  f3: (a: T3) => T4,
-): T4;
+export function pipe<T1, T2, T3, T4>(x: T1, f1: (a: T1) => T2, f2: (a: T2) => T3, f3: (a: T3) => T4): T4;
 export function pipe<T1, T2, T3, T4, T5>(
   x: T1,
   f1: (a: T1) => T2,
