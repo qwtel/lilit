@@ -1,5 +1,7 @@
 # Florian's Little Iterator Library
 
+[![Build status][tr-svg]][travis]
+
 An iterator library that is so simple you could have written it yourself.
 
 ECMAScriopt's new (async) generator functions are powerful and almost seem to be designed to build libraries like these.
@@ -59,3 +61,7 @@ Load via `<script type="module" src="./script.js"></script>`
 
 ### Other
 To see what else is availabe, [browse the package contents](https://unpkg.com/lilit/).
+
+
+[tr-svg]: https://travis-ci.org/qwtel/lilit.svg?branch=master
+[travis]: https://travis-ci.org/qwtel/lilit

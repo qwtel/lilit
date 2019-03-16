@@ -786,7 +786,7 @@ export async function pipe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
 ): Promise<T12>;
 
 export async function pipe(x: any, ...fs: Function[]): Promise<any> {
-  let res = x;
+  let res = await x;
   for (const f of fs) res = await f(res);
   return res;
 }

@@ -36,7 +36,7 @@ export function tee<T>(it: Iterable<T> | Iterator<T>): [Iterable<T>, Iterable<T>
   if (!isIterator(it)) return [it, it] as [Iterable<T>, Iterable<T>];
 
   const source = it as Iterator<T>;
-  const buffers = [[], []];
+  const buffers: [T[], T[]] = [[], []];
   const DONE = Symbol('done');
 
   const next = (i: number): T | symbol => {
