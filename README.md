@@ -29,35 +29,35 @@ ECMAScriopt's new (async) generator functions are powerful and almost seem to be
 ### Deno
 
 ```ts
-// index.ts
+// main.ts
 import * as lilit from 'https://unpkg.com/lilit/ts/index.ts';
 ```
-Run via `deno index.ts`
+Run via `deno main.ts`
 
 ### Node 11+ Modules
 
 ```js
-// index.mjs
+// main.mjs
 import * as lilit from 'lilit/mjs';
 ```
 
-Run via `node --experimental-modules index.mjs`
+Run via `node --experimental-modules main.mjs`
 
 ### Node Require
 ```js
-// index.js
+// main.js
 const lilit = require('lilit');
 ```
 
-Run via `node index.js`
+Run via `node main.js`
 
 ### Browser Imports
 ```js
-// script.js
+// main.js
 import * as lilit from 'https://unpkg.com/lilit/mjs/index.mjs';
 ```
 
-Load via `<script type="module" src="./script.js"></script>`
+Load via `<script type="module" src="./main.js"></script>`
 
 ### Other
 To see what else is availabe, [browse the package contents](https://unpkg.com/lilit/).
